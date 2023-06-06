@@ -85,6 +85,15 @@ chmod 440 /etc/sudoers.d/rocky
 #### fix up selinux context
 # restorecon -R /home/rocky/.ssh/
 
+# Add syslog user with groups adm
+adduser --groups adm syslog
+
+#### Disable selinux 
+cat > /etc/sysconfig/selinux <<EOF
+SELINUX=disabled
+SELINUXTYPE=targeted
+EOF
+
 %end
 
 %packages
