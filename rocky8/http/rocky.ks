@@ -43,6 +43,7 @@ rootpw --plaintext password
 
 # Add a user named packer
 user --groups=wheel --name=rocky --password=rocky --plaintext --gecos="rocky"
+sshkey --username=rocky "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjJTyk0vJsZLCHLyYxrtL1U41YuP50pKjF61WdIJPzk bdx@raton00"
 
 %post --erroronfail
 # workaround anaconda requirements and clear root password
@@ -89,6 +90,7 @@ chmod 440 /etc/sudoers.d/rocky
 
 %packages
 @Core
+python3.8
 bash-completion
 cloud-init
 cloud-utils-growpart
