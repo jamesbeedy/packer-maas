@@ -21,7 +21,7 @@ network --device eth0 --bootproto=dhcp
 # Enable firewal, let SSH through
 firewall --enabled --service=ssh
 # Enable SELinux with default enforcing policy
-selinux --enforcing
+#selinux --enforcing
 
 # Do not set up XX Window System
 skipx
@@ -44,6 +44,8 @@ rootpw --plaintext password
 # Add a user named packer
 user --groups=wheel --name=rocky --password=rocky --plaintext --gecos="rocky"
 sshkey --username=rocky "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjJTyk0vJsZLCHLyYxrtL1U41YuP50pKjF61WdIJPzk bdx@raton00"
+
+user --groups=adm --name=syslog
 
 %post --erroronfail
 # workaround anaconda requirements and clear root password
@@ -85,6 +87,11 @@ chmod 440 /etc/sudoers.d/rocky
 #
 #### fix up selinux context
 # restorecon -R /home/rocky/.ssh/
+
+cat > /etc/selinux/config <<EOF
+SELINUX=disabled
+SELINUXTYPE=targeted
+EOF
 
 %end
 
